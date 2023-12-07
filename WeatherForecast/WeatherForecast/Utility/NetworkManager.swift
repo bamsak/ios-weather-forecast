@@ -15,16 +15,14 @@ final class NetworkManager {
         self.urlFormatter = urlFormatter
         self.session = session
     }
-}
-
-extension NetworkManager: NetworkManagable {
+    
     func getData<T: Decodable>(path: String, with queries: [String: String], completion: @escaping (Result<T, Error>) -> Void) {
         guard let url = urlFormatter.makeURL(path: path, with: queries)
         else {
             return completion(.failure(NetworkError.urlFormattingError))
         }
         
-        let request = urlFormatter.makeURLRequest(url: url, httpMethodType: .get)
+        let request = URLRequest(url: url)
         
         let task = session.dataTask(with: request) { data, response, error in
             if let error = error {

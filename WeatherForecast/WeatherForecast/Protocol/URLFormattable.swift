@@ -11,7 +11,6 @@ protocol URLFormattable {
     associatedtype T: APIBaseURLProtocol
     
     func makeURL(path: String, with queries: [String: String]) -> URL?
-    func makeURLRequest(url: URL, httpMethodType: HTTPMethod) -> URLRequest
 }
 
 extension URLFormattable {
@@ -24,12 +23,5 @@ extension URLFormattable {
         }
         urlComponents?.queryItems = queryItems
         return urlComponents?.url
-    }
-    
-    func makeURLRequest(url: URL, httpMethodType: HTTPMethod) -> URLRequest {
-        var request = URLRequest(url: url)
-        request.httpMethod = "\(httpMethodType)".uppercased()
-        
-        return request
     }
 }
