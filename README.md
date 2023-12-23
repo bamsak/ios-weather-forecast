@@ -1,6 +1,6 @@
 # 날씨 앱
 
-## 팀원:busts_in_silhouette: 
+## 팀원
 | 프로필 사진 | <a href="https://github.com/bamsak"><img src="https://avatars.githubusercontent.com/u/114239407?v=4" width="90" height="90"></a> | <a href="https://github.com/KSK9820"><img src="https://avatars.githubusercontent.com/u/68066104?v=4" width=90></a> | 
 | ---- | ---------- | --------- | 
 | in Github | [@bamsak](https://github.com/bamsak) | [@KSK9820](https://github.com/KSK9820) 
