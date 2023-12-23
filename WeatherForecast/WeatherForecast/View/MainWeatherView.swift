@@ -8,9 +8,9 @@
 import UIKit
 
 final class MainWeatherView: UIView {
-    private weak var delegate: MainWeatherViewDelegate?
+    private weak var delegate: (MainWeatherViewDelegate & AlertPresentable)?
 
-    init(delegate: MainWeatherViewDelegate?) {
+    init(delegate: (MainWeatherViewDelegate & AlertPresentable)?) {
         self.delegate = delegate
         super.init(frame: .zero)
         collectionViewConfigure()
@@ -99,7 +99,7 @@ extension MainWeatherView: UICollectionViewDataSource {
         guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CurrentHeaderView.reuseIdentifier, for: indexPath) as? CurrentHeaderView else {
             return CurrentHeaderView()
         }
-        
+        headerView.delegate = delegate
         delegate?.updateHeaderView(headerView, collectionView: collectionView)
         
         return headerView

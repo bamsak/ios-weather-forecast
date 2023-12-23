@@ -9,6 +9,8 @@ import UIKit
 
 final class CurrentHeaderView: UICollectionReusableView, ReuseIdentifiable {
     
+    weak var delegate: AlertPresentable?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         headerViewConfigure()
@@ -26,19 +28,15 @@ final class CurrentHeaderView: UICollectionReusableView, ReuseIdentifiable {
         return imageView
     }()
     
+    
     private lazy var locationLabel: UILabel = {
         let label = UILabel()
-        
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
+        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return label
     }()
     
     private lazy var minMaxLabel: UILabel = {
         let label = UILabel()
-        
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -46,18 +44,26 @@ final class CurrentHeaderView: UICollectionReusableView, ReuseIdentifiable {
         let label = UILabel()
         
         label.font = UIFont.preferredFont(forTextStyle: .largeTitle)
-        label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
     
-    private lazy var headerStackView: UIStackView = {
+    private lazy var locationChangeButton: UIButton = {
+       let button = UIButton()
+        
+        button.setTitle("위치설정", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(showLocationSettingAlert), for: .touchUpInside)
+        button.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        return button
+    }()
+    
+    private lazy var labelButtonStack: UIStackView = {
         let stackView = UIStackView()
         
-        stackView.addArrangedSubview(cellImage)
-        stackView.addArrangedSubview(temperatureLabelStackView)
+        stackView.addArrangedSubview(locationLabel)
+        stackView.addArrangedSubview(locationChangeButton)
         stackView.axis = .horizontal
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.distribution = .fill
         stackView.spacing = 8
         
@@ -67,10 +73,9 @@ final class CurrentHeaderView: UICollectionReusableView, ReuseIdentifiable {
     private lazy var locationLabelStackView: UIStackView = {
         let stackView = UIStackView()
         
-        stackView.addArrangedSubview(locationLabel)
+        stackView.addArrangedSubview(labelButtonStack)
         stackView.addArrangedSubview(minMaxLabel)
         stackView.distribution = .fillEqually
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         
         return stackView
@@ -82,8 +87,20 @@ final class CurrentHeaderView: UICollectionReusableView, ReuseIdentifiable {
         stackView.addArrangedSubview(locationLabelStackView)
         stackView.addArrangedSubview(temperatureLabel)
         stackView.distribution = .fillEqually
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
+        
+        return stackView
+    }()
+    
+    private lazy var headerStackView: UIStackView = {
+        let stackView = UIStackView()
+        
+        stackView.addArrangedSubview(cellImage)
+        stackView.addArrangedSubview(temperatureLabelStackView)
+        stackView.axis = .horizontal
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.distribution = .fill
+        stackView.spacing = 8
         
         return stackView
     }()
@@ -114,5 +131,9 @@ final class CurrentHeaderView: UICollectionReusableView, ReuseIdentifiable {
         temperatureLabel.text = String(format: "%.1f", temperature)
         
         cellImage.image = image
+    }
+    
+    @objc private func showLocationSettingAlert() {
+        delegate?.showLocationSettingAlert()
     }
 }

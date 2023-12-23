@@ -57,6 +57,6 @@ extension CurrentLocationManager: CurrentLocationManagable {
             coordinates: CLLocationCoordinate2D(latitude: 37.5336766, longitude: 126.9632199),
             city: "서울시",
             district: "용산구"
-            )
+        )
     }
 }
